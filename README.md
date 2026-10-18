@@ -9,7 +9,7 @@ MATLAB implementations of GPS L1 C/A signal Software-Defined Receiver(SDR).
 [![MATLAB](https://img.shields.io/badge/MATLAB-Code-0076A8?style=flat-square&logo=mathworks&logoColor=white)](https://www.mathworks.com/products/matlab.html)
 [![Signal](https://img.shields.io/badge/Signal-GPS%20L1%20C%2FA-2E7D32?style=flat-square)](#)
 [![Course](https://img.shields.io/badge/Course-ECE7067-5C6BC0?style=flat-square)](#)
-[![Univ](https://img.shields.io/badge/Inha%20Univ.-AutoNav%20LAB-1F3A93?style=flat-square)](#)
+[![Univ](https://img.shields.io/badge/Inha%20Univ.-Electrical%20and%20Computer%20Engineering-1F3A93?style=flat-square)](#)
 
 </div>
 
@@ -207,6 +207,6 @@ run('HW2/MainHW2.m')                         % Run Tasks 1, 2, and 4 → HW2/Res
 
 ---
 
-**Ji Won Lee** · M.S. Student, AutoNav LAB, Inha University
+**Ji Won Lee** · M.S. Student, Department of Electrical and Computer Engineering, Inha University
 
 </div>
