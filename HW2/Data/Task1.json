@@ -1,0 +1,46 @@
+{
+    "signal": {
+        "sampleRate_Hz": 5714000,
+        "intermediateFrequency_Hz": 4300000
+    },
+    "truth": {
+        "prn": 1,
+        "codeDelay_chip": 2,
+        "carrierPhase_cycle": 0,
+        "doppler_Hz": 0
+    },
+    "tracking": {
+        "integrationTime_ms": 1,
+        "earlyLateOffset_chip": 0.5
+    },
+    "sweep": {
+        "code_chip": {
+            "start": -2,
+            "step": 0.05,
+            "stop": 2
+        },
+        "doppler_Hz": {
+            "start": -3000,
+            "step": 25,
+            "stop": 3000
+        },
+        "phase_cycle": {
+            "start": -1,
+            "step": 0.01,
+            "stop": 1
+        }
+    },
+    "output": {
+        "lineWidth": 1.5,
+        "directory": "Result/Task1",
+        "figureVisible": false,
+        "savePng": true,
+        "saveFig": true,
+        "figurePosition": [
+            100,
+            100,
+            1100,
+            700
+        ]
+    }
+}

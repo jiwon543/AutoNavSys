@@ -1,0 +1,95 @@
+{
+    "source": {
+        "file": "강의노트/LectureNote_ANS Design-4-Tracking_WON.INHA.pdf",
+        "pages": [
+            30,
+            47
+        ],
+        "note": "Lecture formulas evaluated at homework LOS jerk = 5 g/s; lecture example uses 10 g/s."
+    },
+    "requirements": {
+        "maxLosJerk_g_s": 5,
+        "externalAiding": false,
+        "maintainPllLock": true
+    },
+    "assumptions": {
+        "gravity_m_s2": 9.8,
+        "l1Wavelength_m": 0.1903,
+        "l1Frequency_Hz": 1575420000.0,
+        "codeRate_Hz": 1023000.0,
+        "integrationTime_ms": 1,
+        "cn0_dBHz": 30,
+        "oscillator": {
+            "vibrationSensitivity_per_g": 1e-09,
+            "vibrationPsd_g2_Hz": 0.005,
+            "vibrationMinFrequency_Hz": 20,
+            "vibrationMaxFrequency_Hz": 2000,
+            "allanDeviation": 1e-10
+        },
+        "note": "CN0 and oscillator specifications are analysis assumptions from the lecture, not homework requirements. Wavelength is the rounded lecture value."
+    },
+    "architecture": {
+        "carrier": "Jaffe-Rechtin: second-order FLL assisted third-order PLL",
+        "code": "Carrier Doppler aided first-order DLL"
+    },
+    "design": {
+        "pll": {
+            "order": 3,
+            "bandwidth_Hz": 17,
+            "naturalFrequency_rad_s": 20.4,
+            "a3": 1.1,
+            "b3": 2.4
+        },
+        "fll": {
+            "order": 2,
+            "bandwidth_Hz": 1.5,
+            "naturalFrequency_rad_s": 2.835,
+            "a2": 1.414
+        },
+        "dll": {
+            "order": 1,
+            "bandwidth_Hz": 1,
+            "gain_per_s": 4,
+            "carrierToCodeScale": 0.0006493506493506494,
+            "note": "Scale magnitude; code-delay aiding sign follows the signal convention."
+        }
+    },
+    "constraints": {
+        "pllDynamicErrorLimit_rad": 0.2,
+        "fllDynamicErrorLimit_rad_s": 250.0,
+        "pllThreeSigmaTotalLimit_deg": 45
+    },
+    "calculated": {
+        "losJerk_m_s3": 49.0,
+        "carrierPhaseJerk_rad_s3": 1617.845927755122,
+        "minimumPllBandwidth_Hz": 16.728402730741053,
+        "minimumFllBandwidth_Hz": 1.345974312339591,
+        "pll": {
+            "thermalJitter_deg": 9.149402271476507,
+            "dynamicStressError_deg": 10.918658684583463,
+            "vibrationJitter_deg": 1.4200596538127483,
+            "allanJitter_deg": 1.4827482352941177,
+            "combinedRandomJitter_deg": 9.37692239889795,
+            "threeSigmaPlusDynamic_deg": 39.049425881277315,
+            "equivalentOneSigmaTotal_deg": 13.016475293759104,
+            "meetsThreeSigmaConstraint": true,
+            "meetsDynamicConstraint": true
+        },
+        "dll": {
+            "rmsNoiseError_chip": 0.03162277660168379
+        }
+    },
+    "status": {
+        "analyticalDesignComplete": true
+    },
+    "signal": {
+        "sampleRate_Hz": 5714000,
+        "intermediateFrequency_Hz": 4300000
+    },
+    "tracking": {
+        "earlyLateOffset_chip": 0.5,
+        "pllDiscriminatorColumn": 2,
+        "fllDiscriminatorColumn": 3,
+        "fllEnabled": true
+    }
+}

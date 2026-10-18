@@ -1,0 +1,57 @@
+{
+    "randomSeed": 20261018,
+    "duration_s": 10,
+    "blockDuration_ms": 100,
+    "truthInterval_ms": 1,
+    "signal": {
+        "sampleRate_Hz": 5714000,
+        "intermediateFrequency_Hz": 4300000
+    },
+    "truth": {
+        "prn": 1,
+        "initialCodeDelay_chip": 2,
+        "initialCarrierPhase_cycle": 0.08,
+        "initialDoppler_Hz": 1000,
+        "initialDopplerRate_Hz_s": 10,
+        "losJerk_g_s": 0,
+        "gravity_m_s2": 9.8,
+        "l1Wavelength_m": 0.1903,
+        "codeRate_Hz": 1023000.0,
+        "carrierToCodeScale": 0.0006493506493506494,
+        "navigationBit": 1,
+        "navigationBitInterval_ms": 20,
+        "cn0_dBHz": 40
+    },
+    "output": {
+        "file": "GPS_IF_10s.mat",
+        "storageType": "single",
+        "directory": "Result/Task4",
+        "lineWidth": 1.5,
+        "figureVisible": false,
+        "savePng": true,
+        "saveFig": true,
+        "acquisitionZoomCode_chip": 3,
+        "acquisitionZoomDoppler_Hz": 1000,
+        "correlationZoom_ms": [7000, 7100],
+        "iqAxisLimits": [
+            -2,
+            2
+        ]
+    },
+    "model": {
+        "carrierPhase": "phi(t) = phi0 + f0*t + 0.5*fDot0*t^2 + (jerk/lambda)*t^3/6 [cycle]",
+        "doppler": "f(t) = f0 + fDot0*t + 0.5*(jerk/lambda)*t^2 [Hz]",
+        "codeDelay": "tau(t) = tau0 - (phi(t)-phi0)/1540 [chip]",
+        "noise": "Real AWGN, sigma = sqrt(fs/(2*CN0_linear)), unit signal power.",
+        "note": "Task4 baseline: Doppler ramp +10 Hz/s, zero jerk; Task3 maximum design jerk remains 5 g/s. Absolute-time continuous phase and code. Navigation bit alternates +1/-1 every 20 ms. Oscillator phase noise and multipath are not included."
+    },
+    "acquisition": {
+        "integrationTime_ms": 10,
+        "codeBin_chip": 0.5,
+        "dopplerBin_Hz": 250,
+        "falseAlarmProbability": 0.001
+    },
+    "tracking": {
+        "summaryStart_s": 2
+    }
+}
