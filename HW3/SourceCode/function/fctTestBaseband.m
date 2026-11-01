@@ -1,0 +1,56 @@
+function fctTestBaseband(s)
+    rng(s.seed, 'twister');
+    T = .02;
+    sn = 10 ^ (45 / 10);
+    tau = linspace(-1.5, 1.5, 601);
+    phi = linspace(-.49, .49, 601);
+    freq = linspace(-24, 24, 601);
+    [ip, qp, ie, qe, il, ql] = IQSigGen(sn, tau, 0, 0, T, .5, 0);
+    d = fctDiscDLL([complex(ie, qe).', complex(ip, qp).', complex(il, ql).']);
+    [ip, qp] = IQSigGen(sn, 0, phi, 0, T, .5, 0);
+    p = fctDiscPLL(complex(ip, qp).');
+    [i1, q1] = IQSigGen(sn, 0, 0, freq, T, .5, 0);
+    [i2, q2] = IQSigGen(sn, 0, freq * T, freq, T, .5, 0);
+    f = fctDiscFLL(complex(i1, q1).', complex(i2, q2).', T);
+    h = figure('Visible', s.figureVisible, 'Position', [100 100 1100 780]);
+    tiledlayout(2, 2);
+    nexttile;
+    plot(tau, CorrFunc(tau), 'LineWidth', 1.4);
+    grid on;
+    xlabel('Code error [chip]');
+    ylabel('R');
+    title('Triangular code correlation');
+    nexttile;
+    plot(tau, -d);
+    grid on;
+    xlim([-.8 .8]);
+    xlabel('Truth - estimate [chip]');
+    ylabel('DLL [chip]');
+    legend('Envelope', 'Power', 'Dot', 'Location', 'best');
+    nexttile;
+    plot(phi, p);
+    grid on;
+    xlabel('Phase error [cycle]');
+    ylabel('PLL [cycle]');
+    legend('atan2', 'atan', 'Q sign(I)', 'Location', 'best');
+    nexttile;
+    plot(freq, f);
+    grid on;
+    xlabel('Doppler error [Hz]');
+    ylabel('FLL [Hz]');
+    legend('Cross', 'Cross sign(dot)', 'atan2', 'Location', 'best');
+    fctSaveFigure(h, s.resultDir, 'Task1_Discriminators');
+
+    % Physical invariants: correlation peak, signal amplitude and signs.
+    assert(CorrFunc(0) == 1 && CorrFunc(1) == 0 && CorrFunc(-1) == 0);
+    [ip, qp] = IQSigGen(sn, 0, 0, 0, T, .5, 0);
+    assert(abs(ip - 2 * sqrt(sn * T)) < 1e-10 && qp == 0);
+    [ip, qp, ie, qe, il, ql] = IQSigGen(sn, .1, .03, 0, T, .5, 0);
+    v = fctDiscDLL([complex(ie, qe), complex(ip, qp), complex(il, ql)]);
+    p = fctDiscPLL(complex(ip, qp));
+    assert(abs(v(1) + .1) < 1e-12 && abs(p(1) - .03) < 1e-12);
+    assert(abs(f(401, 3) - freq(401)) < 1e-10, 'FLL sign/units mismatch.');
+    [ip, qp] = IQSigGen(0, zeros(1, 100000), 0, 0, T, .5, 1);
+    assert(abs(var(ip) - 1) < .03 && abs(var(qp) - 1) < .03, 'I/Q noise variance mismatch.');
+    fprintf('Baseband amplitude, noise, DLL/PLL/FLL checks passed.\n');
+end
