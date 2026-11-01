@@ -1,5 +1,5 @@
 %% Task 2 - Numerical verification of discriminator derivations
-%% Driectory
+%% Directory
 sHW2Root = fileparts(fileparts(mfilename('fullpath')));
 addpath(genpath(fullfile(sHW2Root,'SourceCode','function')));
 sConfig2 = fctLoadTask2Config(fullfile(sHW2Root,'Data','Task2.json'));
